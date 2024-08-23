@@ -35,21 +35,21 @@ public class DoctorController {
 
     @GetMapping("/id")
     @Operation(summary = "Get doctor by doctor-id")
-    public ResponseEntity<Doctor> getDoctorById(@PathParam("doctorId") Integer doctorId){
+    public ResponseEntity<Doctor> getDoctorById(@RequestParam("doctorId") String doctorId){
         Doctor doctor = doctorService.getDoctorById(doctorId);
         return new ResponseEntity<>(doctor, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{doctorId}")
+    @PutMapping("/update")
     @Operation(summary = "Update doctor details")
-    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor, @PathVariable Integer doctorId){
+    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor, @RequestParam("doctorId") String doctorId){
         Doctor updatedDoctor = doctorService.updateDoctor(doctor, doctorId);
         return new ResponseEntity<>(updatedDoctor, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "Delete doctor")
-    public ResponseEntity<String> deleteDoctor(@PathParam("doctorId") Integer doctorId){
+    public ResponseEntity<String> deleteDoctor(@RequestParam("doctorId") String doctorId){
         String s = doctorService.deleteDoctor(doctorId);
         return new ResponseEntity<>(s, HttpStatus.OK);
     }

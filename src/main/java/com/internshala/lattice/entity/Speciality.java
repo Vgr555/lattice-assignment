@@ -15,8 +15,12 @@ public class Speciality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "speciality_name", nullable = false, unique = true)
     private String specialityName;
+
     @OneToMany
     private List<Symptom> symptoms;
 

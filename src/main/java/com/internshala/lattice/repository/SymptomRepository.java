@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface SymptomRepository extends JpaRepository<Symptom, Integer> {
 
     @Query(value = "SELECT speciality_name FROM speciality WHERE id=" +
-            "(SELECT speciality_id FROM speciality_symptoms WHERE symptoms_id=" +
+            "(SELECT speciality_id FROM speciality_symptoms WHERE symptom_id=" +
             "(SELECT id FROM symptom WHERE symptom_name=?1))", nativeQuery = true)
     String findSpecialityBySymptomName(String symptom);
 }

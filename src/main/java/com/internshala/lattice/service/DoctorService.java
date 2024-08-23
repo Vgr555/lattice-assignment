@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class DoctorService {
@@ -16,6 +17,7 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     public Doctor registerDoctor(Doctor doctor) {
+        doctor.setDoctorId(UUID.randomUUID().toString());
         return doctorRepository.save(doctor);
     }
 
@@ -23,16 +25,16 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Doctor getDoctorById(Integer doctorId) {
-        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+    public Doctor getDoctorById(String doctorId) {
+        Optional<Doctor> doctor = doctorRepository.findByDoctorId(doctorId);
         if(doctor.isEmpty()){
             throw new NoSuchDoctorException("Doctor with id : "+doctorId+" not found!");
         }
         return doctor.get();
     }
 
-    public String deleteDoctor(Integer doctorId) {
-        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+    public String deleteDoctor(String doctorId) {
+        Optional<Doctor> doctor = doctorRepository.findByDoctorId(doctorId);
         if(doctor.isEmpty()){
             throw new NoSuchDoctorException("Doctor with id : "+doctorId+" not found!");
         }
@@ -40,8 +42,8 @@ public class DoctorService {
         return "Doctor deleted successfully!";
     }
 
-    public Doctor updateDoctor(Doctor doctor, Integer doctorId) {
-        Optional<Doctor> doctor1 = doctorRepository.findById(doctorId);
+    public Doctor updateDoctor(Doctor doctor, String doctorId) {
+        Optional<Doctor> doctor1 = doctorRepository.findByDoctorId(doctorId);
         if(doctor1.isEmpty()){
             throw new NoSuchDoctorException("Doctor with id : "+doctorId+" not found!");
         }

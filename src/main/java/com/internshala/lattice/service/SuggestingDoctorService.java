@@ -26,9 +26,9 @@ public class SuggestingDoctorService {
     @Autowired
     private SymptomRepository symptomRepository;
 
-    public List<Doctor> getDoctorsByPatientSymptom(Integer patientId){
+    public List<Doctor> getDoctorsByPatientSymptom(String patientId){
 
-        Optional<Patient> patient = patientRepository.findById(patientId);
+        Optional<Patient> patient = patientRepository.findByPatientId(patientId);
         if(patient.isEmpty()){
             throw new NoSuchPatientException("Patient with id : " + patientId + " not found!");
         }

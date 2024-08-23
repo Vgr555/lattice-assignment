@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PatientService {
@@ -16,6 +17,7 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     public Patient registerPatient(Patient patient) {
+        patient.setPatientId(UUID.randomUUID().toString());
         return patientRepository.save(patient);
     }
 
@@ -23,16 +25,16 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Patient getPatientById(Integer patientId) {
-        Optional<Patient> patient = patientRepository.findById(patientId);
+    public Patient getPatientById(String patientId) {
+        Optional<Patient> patient = patientRepository.findByPatientId(patientId);
         if(patient.isEmpty()){
             throw new NoSuchPatientException("Patient with id : "+patientId+" not found!");
         }
         return patient.get();
     }
 
-    public Patient updatePatient(Patient patient, Integer patientId) {
-        Optional<Patient> patient1 = patientRepository.findById(patientId);
+    public Patient updatePatient(Patient patient, String patientId) {
+        Optional<Patient> patient1 = patientRepository.findByPatientId(patientId);
         if(patient1.isEmpty()){
             throw new NoSuchPatientException("Patient with id : "+patientId+" not found!");
         }
@@ -45,8 +47,8 @@ public class PatientService {
         return patientRepository.save(patient2);
     }
 
-    public String deletePatient(Integer patientId) {
-        Optional<Patient> patient = patientRepository.findById(patientId);
+    public String deletePatient(String patientId) {
+        Optional<Patient> patient = patientRepository.findByPatientId(patientId);
         if(patient.isEmpty()){
             throw new NoSuchPatientException("Patient with id : "+patientId+" not found!");
         }

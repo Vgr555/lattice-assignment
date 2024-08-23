@@ -13,8 +13,10 @@ public class Symptom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    @Column(unique = true)
+
+    @Column(name = "symptom_name",nullable = false, unique = true)
     private String symptomName;
 
 }
